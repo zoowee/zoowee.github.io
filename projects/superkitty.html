@@ -1,0 +1,195 @@
+<!DOCTYPE HTML w/ Processing>
+
+<html>
+    <head>
+        <title>⋆ ˚｡⋆୨୧˚ Portfolio ˚୨୧⋆｡˚ ⋆</title>
+        <link rel="icon" type="image/png" href="http://cdn130.picsart.com/286203394073211.png">
+        <link href="https://fonts.googleapis.com/css?family=Homemade+Apple&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Sacramento&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    
+    <body>
+        <header>
+            <div class="navbar">
+                <nav>
+                    <ul>
+                        <li class="current"><a href="projects.html">PORTFOLIO</a></li>
+                        <li><a href="about.html">ABOUT</a></li>
+                        <li><a href="index.html">HOME</a></li>
+                    </ul>
+                </nav>
+                <h1 class="top">— stuff i've made ! ☆ﾐ</h1>
+            </div>
+        </header>
+            <a href = "./projects/clock.html">
+            <img class = "projects" src = "https://www.amara.com/static/uploads/images-2/products/x/huge/1167712/number-three-echo-wall-clock-pink-956245.jpg">
+            <iframe src="https://editor.p5js.org/zoowee/embed/GHHHBsHXi" height = 400 width = 400></iframe>
+            <iframe src="https://editor.p5js.org/zoowee/embed/nd15Ks69D" height = 400 width = 400></iframe>
+            <iframe src="https://editor.p5js.org/zoowee/embed/ZmJ8dDcaz" height = 400 width = 400></iframe>
+        <footer>
+            <h6>jerica ju © 2019</h6>
+        </footer>
+    </body>
+    
+    <script type="text/processing">
+      PImage bg, botPipe, topPipe, cat, start;
+      int bgx, bgy, cx, cy, g, Vcy;
+      int[] pipeX, pipeY;
+      int gameState, score, highScore;
+      
+      void setup(){
+          size(750, 550);
+          bg = loadImage("./imgsuperkitty/bg.png");
+          cat = loadImage("./imgsuperkitty/cat.png");
+          start = loadImage("./imgsuperkitty/start.png");
+          botPipe = loadImage("./imgsuperkitty/botPipe.png");
+          topPipe = loadImage("./imgsuperkitty/topPipe.png");
+          cx = 100;
+          cy = 50;
+          g = 1;
+          pipeX = new int[5];
+          pipeY = new int[pipeX.length];
+          for(int i = 0; i < pipeX.length; i++){
+            pipeX[i] = width + 200*i;
+            pipeY[i] = (int)random(-350,0);
+          }
+          gameState = -1;
+      }
+      
+      void draw(){
+          if(gameState == -1){
+            startScreen();
+          }
+          else if(gameState == 0){
+            setBg();
+            setPipes();
+            cat();
+            setScore();
+          }
+          else{
+            endScreen();
+            restart();
+          }
+      }
+
+      
+      void setBg(){
+          image(bg, bgx, bgy);
+          image(bg, bgx + bg.width, bgy);
+          bgx = bgx - 1;
+          if(bgx < -bg.width){
+            bgx = 0;
+          }
+      }
+
+      
+      void setPipes(){
+          for(int i = 0; i < pipeX.length; i++){
+            image(topPipe, pipeX[i], pipeY[i]);
+            image(botPipe, pipeX[i], pipeY[i] + 575);
+            pipeX[i]-= 4;
+            if(score > 10){
+              pipeX[i]--;  //speed up at score of 10 points
+            }
+            if(score > 20){
+              pipeX[i]--;  //speed up again at 20 points  
+            }
+            if(pipeX[i] < -200){
+              pipeX[i] = width;  
+            }
+            //collision
+            if(cx > (pipeX[i] - 63) && cx < pipeX[i] + 70){
+              if(!(cy > pipeY[i] + 418 && cy < pipeY[i] + (418 + 157 - 50))){
+                gameState = 1;
+                fill(255, 0, 0, 200);
+                textSize(20);
+                rect(20, height - 223, 455, 32);
+                fill(0);
+                text(" You crashed Kitty into a pipe :(", 20, height - 200);      
+                gameState = 1;
+              }
+              //score if pass through pipe
+              else{
+                score += 1;  
+              }
+            }
+          }
+      }
+      void mousePressed(){
+          Vcy = -10;
+      }
+      
+      void keyPressed(){
+          Vcy = -10;
+      }
+      void cat(){
+          image(cat, cx, cy);
+          cy = cy + Vcy;
+          Vcy = Vcy + g;
+          if(cy > height || cy < 0){
+            fill(255);
+            rect(16, 18, 500, 40);
+            fill(0, 0 , 255, 255);
+            textSize(24);
+            text(" Oops, you killed the cat.", 20, 45);
+            gameState = 1;
+          }
+      }
+      
+      void endScreen(){
+          fill(150, 150, 250, 100);
+          if(mouseX > 90 && mouseX < 595 && mouseY > 150 && mouseY < 290){
+            fill(150, 250, 150, 100);
+            score = 0;
+          }
+          rect(90, 150, 505, 140, 5);
+          fill(0);
+          textSize(40);
+          text("Kitty died  : (", 200, 200);
+          text("Click HERE to play again."   , 100, 270);
+      }
+      void restart(){
+          if(mouseX > 90 && mouseX < 595 && mouseY > 150 && mouseY < 290){
+            if(mousePressed){
+              gameState = -1;
+              cx = 100;
+              cy = 50;
+              g = 1;
+              pipeX = new int[5];
+              pipeY = new int[pipeX.length];
+              for(int i = 0; i < pipeX.length; i++){
+                pipeX[i] = width + 200*i;
+                pipeY[i] = (int)random(-350,0);
+              }
+            }
+          }
+      }
+      
+      void startScreen(){
+          image(start, 0, 0);
+          if(mousePressed){
+            cy = height/2;
+            gameState = 0;
+          }
+      }
+      
+      void setScore(){
+          if(score > highScore){
+            highScore = score;
+          }
+          fill(160, 160, 160, 200);
+          rect(width - 175, 10, 155, 80, 5);
+          fill(0);
+          textSize(20);
+          text("Score: " + score, width - 170, 40);
+          text("High Score: " + highScore, width - 170, 80);
+      }
+     
+    </script>
+      
+    <footer>
+        <p>jerica ju copyright &copy 2019</p>
+    </footer>
+  </body>
+</html>
