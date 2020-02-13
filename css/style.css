@@ -15,7 +15,7 @@ body {
   font-size: 15px;
 }
 .navbar li {
-    float: right;
+    display: inline-block;
     padding-right: 25px;
     padding-left: 25px;
 }
