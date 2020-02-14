@@ -58,7 +58,7 @@
         else if(gameState == 0){
           setBg();
           setPipes();
-          //cat();
+          setCat();
           setScore();
         }
         else{
@@ -81,11 +81,11 @@
           image(topPipe, pipeX[i], pipeY[i]);
           image(botPipe, pipeX[i], pipeY[i] + 575);
           pipeX[i]-= 4;
-          if(score > 10){
-            pipeX[i]--;  //speed up at score of 10 points
+          if(score > 50){
+            pipeX[i]--;  //speed up at score of 50 points
           }
-          if(score > 20){
-            pipeX[i]--;  //speed up again at 20 points  
+          if(score > 100){
+            pipeX[i]--;  //speed up again at 100 points  
           }
           if(pipeX[i] < -200){
             pipeX[i] = width;  
@@ -94,7 +94,7 @@
           if(cx > (pipeX[i] - 63) && cx < pipeX[i] + 70){
             if(!(cy > pipeY[i] + 418 && cy < pipeY[i] + (418 + 157 - 50))){
               gameState = 1;
-              fill(255, 0, 0, 200);
+              fill(227, 255, 234, 200);
               textSize(20);
               rect(20, height - 223, 455, 32);
               fill(0);
@@ -117,19 +117,19 @@
         Vcy = -10;
       }
       
-      // void cat(){
-      //   image(cat, cx, cy);
-      //   cy = cy + Vcy;
-      //   Vcy = Vcy + g;
-      //   if(cy > height || cy < 0){
-      //     fill(255);
-      //     rect(16, 18, 500, 40);
-      //     fill(0, 0 , 255, 255);
-      //     textSize(24);
-      //     text(" Oops, you killed the cat.", 20, 45);
-      //     gameState = 1;
-      //   }
-      // }
+      void setCat(){
+        image(cat, cx, cy);
+        cy = cy + Vcy;
+        Vcy = Vcy + g;
+        if(cy > height || cy < 0){
+          fill(255, 255, 255, 50);
+          rect(16, 18, 500, 40);
+          fill(0, 0, 0, 100);
+          textSize(24);
+          text(" Oops, you killed the cat.", 20, 45);
+          gameState = 1;
+        }
+      }
       
       void endScreen(){
         fill(150, 150, 250, 100);
@@ -141,7 +141,7 @@
         fill(0);
         textSize(40);
         text("Kitty died  : (", 200, 200);
-        text("Click HERE to play again."   , 100, 270);
+        text("click HERE to play again."   , 100, 270);
       }
       
       void restart(){
