@@ -1,5 +1,6 @@
 body {
-    background-color:#cceeff;
+    background-color: #cceeff;
+    margin: 0px;
 }
 
 .navbar {
@@ -35,6 +36,15 @@ body {
     border-color: white;
 }
 
+.footer {
+    background-color: #b8b8b8;
+    padding: 10px;
+    margin-top: 30px;
+    color: #ffffff;
+    text-align: center;
+    display: block;
+}
+
 .top {
     padding-left: 10px;
     color:#cceeff;
@@ -50,19 +60,22 @@ body {
     font-size: 25px;
 }
 
-.rick {
-    height: 500px;
-    width: 350px;
+.circles {
+    height: 100px;
+    margin-left: 30px;
 }
 
-.awkim {
+.glasses {
     float: right;
+    padding-right: 50px;
+    height: 100px;
 }
 
-.time {
-    height: 300px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    filter: blur(1px);
+.project {
+    text-align: center;
+}
+
+.projects {
+    padding: 10px;
+    color: #cceeff;
 }
